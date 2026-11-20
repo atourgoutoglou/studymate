@@ -1,0 +1,8 @@
+# Virtual environment (libraries, never uploaded)
+.venv/
+
+# Python cache files
+__pycache__/
+
+# Our test PDFs (may have copyright)
+data/
