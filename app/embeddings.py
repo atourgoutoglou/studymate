@@ -17,6 +17,21 @@ def normalize(vectors: np.ndarray) -> np.ndarray:
     """Scale vectors to length 1, so that a dot product equals cosine similarity."""
     return vectors / np.linalg.norm(vectors, axis=-1, keepdims=True)
 
+class SemanticIndex:
+    """Stores the embedding of every chunk and finds the closest ones to a question."""
+
+    def __init__(self, chunks: list[Chunk]):
+        self.chunks = chunks
+        texts = [f"search_document: {chunk.text}" for chunk in chunks]
+        self.vectors = normalize(embed_texts(texts))
+
+    def search(self, question: str, top_k: int = 3) -> list[Chunk]:
+        """Return the `top_k` chunks whose meaning is closest to the question."""
+        question_vector = normalize(embed_texts([f"search_query: {question}"])[0])
+        scores = self.vectors @ question_vector
+        best = np.argsort(scores)[::-1][:top_k]
+        return [self.chunks[i] for i in best]
+
 
 if __name__ == "__main__":
     sentences = [

@@ -1,6 +1,7 @@
 """StudyMate: ask questions about your PDF and get answers with page citations."""
 from pathlib import Path
 
+from app.embeddings import SemanticIndex
 from app.ingest import Chunk, chunk_pdf
 from app.llm import ask_llm
 from app.search import keyword_search
@@ -14,7 +15,11 @@ def build_context(chunks: list[Chunk]) -> str:
 def main() -> None:
     pdf_path = Path("data/rag_paper.pdf")
     chunks = chunk_pdf(pdf_path)
-    print(f"Loaded {pdf_path.name}: {len(chunks)} chunks. Type 'exit' to quit.")
+    print(f"Loaded {pdf_path.name}: {len(chunks)} chunks.")
+
+    print("Building semantic index...")
+    index = SemanticIndex(chunks)
+    print("Ready! Type 'exit' to quit.")
 
     while True:
         question = input("\nYour question: ").strip()
@@ -23,12 +28,11 @@ def main() -> None:
         if not question:
             continue
 
-        relevant = keyword_search(question, chunks)
-        if not relevant:
-            print("I could not find anything relevant in your documents.")
-            continue
+        keyword_pages = [chunk.page for chunk in keyword_search(question, chunks)]
+        relevant = index.search(question, top_k=5)
+        print(f"Keyword search pages:  {keyword_pages}")
+        print(f"Semantic search pages: {[chunk.page for chunk in relevant]}")
 
-        print("Searching pages:", [chunk.page for chunk in relevant])
         answer = ask_llm(question, context=build_context(relevant))
         print(f"\n{answer}")
 

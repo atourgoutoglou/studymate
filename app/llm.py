@@ -1,7 +1,7 @@
 """Communication with the local LLM (Ollama)."""
 import ollama
 
-MODEL = "llama3.2"
+MODEL = "llama3.1:8b"
 
 SYSTEM_PROMPT = (
     "You are StudyMate, a helpful study assistant. "
