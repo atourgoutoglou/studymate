@@ -1,6 +1,6 @@
 import pytest
 
-from app.ingest import split_text
+from app.ingest import clean_text, split_text
 
 
 def make_text(number_of_words: int) -> str:
@@ -40,3 +40,17 @@ def test_empty_text_gives_no_chunks():
 def test_invalid_settings_raise_error(chunk_size, overlap):
     with pytest.raises(ValueError):
         split_text("some text here", chunk_size=chunk_size, overlap=overlap)
+
+@pytest.mark.parametrize("dirty, clean", [
+    ("based on transformers.[1][2] Next", "based on transformers. Next"),
+    ("datasets NQ [29], TQA [24, 25]", "datasets NQ, TQA"),
+    ("models [3–5] work", "models work"),
+    ("this is unclear[citation needed] here", "this is unclear here"),
+    ("too   many\n spaces", "too many spaces"),
+])
+def test_clean_text_removes_reference_markers(dirty, clean):
+    assert clean_text(dirty) == clean
+
+
+def test_clean_text_keeps_normal_brackets():
+    assert clean_text("see [Page 3] and [Figure 1a]") == "see [Page 3] and [Figure 1a]"

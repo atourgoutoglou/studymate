@@ -1,12 +1,15 @@
 """Load PDF documents, extract their text and split it into chunks."""
 from dataclasses import dataclass
 from pathlib import Path
+import re
 
 from pypdf import PdfReader
 
 CHUNK_SIZE = 200     # words per chunk
 CHUNK_OVERLAP = 40   # words shared with the previous chunk
 
+# Reference markers like [1], [24, 25], [3–5] or [citation needed]
+CITATION_MARKER = re.compile(r"\[(?:\d+(?:\s*[,–-]\s*\d+)*|citation needed)\]")
 
 @dataclass
 class Chunk:
@@ -16,6 +19,12 @@ class Chunk:
     page: int    # page number, used later for citations
     text: str
 
+def clean_text(text: str) -> str:
+    """Remove reference markers and extra whitespace from extracted text."""
+    text = CITATION_MARKER.sub("", text)
+    text = " ".join(text.split())
+    return re.sub(r"\s+([,.;:])", r"\1", text)
+
 
 def load_pdf_pages(path: Path) -> list[tuple[int, str]]:
     """Return a list of (page_number, text) for every page that has text."""
@@ -23,7 +32,7 @@ def load_pdf_pages(path: Path) -> list[tuple[int, str]]:
     pages = []
     for page_number, page in enumerate(reader.pages, start=1):
         text = page.extract_text() or ""
-        text = " ".join(text.split())
+        text = clean_text(text)
         if text:
             pages.append((page_number, text))
     return pages
@@ -51,6 +60,15 @@ def chunk_pdf(path: Path) -> list[Chunk]:
     for page_number, text in load_pdf_pages(path):
         for piece in split_text(text):
             chunks.append(Chunk(source=path.name, page=page_number, text=piece))
+    return chunks
+
+def chunk_folder(folder: Path) -> list[Chunk]:
+    """Load and chunk every PDF in a folder."""
+    chunks = []
+    for pdf_path in sorted(Path(folder).glob("*.pdf")):
+        file_chunks = chunk_pdf(pdf_path)
+        print(f"  {pdf_path.name}: {len(file_chunks)} chunks")
+        chunks.extend(file_chunks)
     return chunks
 
 
