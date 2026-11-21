@@ -6,3 +6,6 @@ __pycache__/
 
 # Our test PDFs (may have copyright)
 data/
+
+# Saved embeddings (can be recomputed)
+.cache/
