@@ -11,19 +11,20 @@ SYSTEM_PROMPT = (
 )
 
 
-def ask_llm(question: str, context: str = "") -> str:
-    """Send a question (and optional context) to the LLM and return its answer."""
-    if context:
-        user_content = f"Context:\n{context}\n\nQuestion: {question}"
-    else:
-        user_content = question
+def chat(system_prompt: str, user_message: str) -> str:
+    """Send one system prompt and one user message to the LLM, return its reply."""
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": user_content},
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_message},
     ]
     response = ollama.chat(model=MODEL, messages=messages)
     return response["message"]["content"]
 
-if __name__ == "__main__":
-    answer = ask_llm("In artificial intelligence, what is RAG? Answer in 2 sentences.")
-    print(answer)
+
+def ask_llm(question: str, context: str = "") -> str:
+    """Answer a question as StudyMate, using the given context."""
+    if context:
+        user_message = f"Context:\n{context}\n\nQuestion: {question}"
+    else:
+        user_message = question
+    return chat(SYSTEM_PROMPT, user_message)

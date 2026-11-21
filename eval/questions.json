@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What task is used to test the natural language generation capabilities of RAG models?",
+    "page": 4
+  },
+  {
+    "question": "What components of the approach in Figure 1 are pre-trained, and what is the approach referred to as that combines these pre-trained components?",
+    "page": 2
+  },
+  {
+    "question": "What is the title of the research paper by Liu et al. that was published in the International Conference on Learning Representations in 2018?",
+    "page": 13
+  },
+  {
+    "question": "What is a key characteristic of the FEVER task that distinguishes it from many other approaches to fact verification?",
+    "page": 5
+  },
+  {
+    "question": "What type of question is an example of the more demanding task used to evaluate RAG's generation abilities?",
+    "page": 5
+  },
+  {
+    "question": "What possible reasons for retrieval collapse in the RAG model were identified by the researchers?",
+    "page": 19
+  },
+  {
+    "question": "What is the formula for the probability of a sequence in the RAG-Token model?",
+    "page": 3
+  },
+  {
+    "question": "What mechanism for modelling the \"null document\" did the authors explore in their implementation of RAG?",
+    "page": 18
+  },
+  {
+    "question": "What percentage of state-of-the-art pipeline models' results did our models achieve in FEVER fact verification?",
+    "page": 2
+  },
+  {
+    "question": "What is the title of the 2020 research paper by Guu et al. cited in this list?",
+    "page": 12
+  },
+  {
+    "question": "What is the amount of CPU memory required to store document index vectors for all of Wikipedia?",
+    "page": 17
+  },
+  {
+    "question": "What are some differences between our approach and retrieve-and-edit style approaches in the context of our research?",
+    "page": 9
+  },
+  {
+    "question": "What is the task on which the authors' RAG models achieved results within 4.3% of the state-of-the-art?",
+    "page": 2
+  },
+  {
+    "question": "What are two potential risks associated with the development and use of advanced language models?",
+    "page": 10
+  },
+  {
+    "question": "What is the one task where BM25 retriever performs best in comparison to RAG's dense retriever?",
+    "page": 7
+  },
+  {
+    "question": "What are the limitations of models that can expand or revise their memory?",
+    "page": 1
+  },
+  {
+    "question": "What is the primary advantage of using a hybrid model that combines parametric memory with non-parametric memory, according to the authors?",
+    "page": 1
+  },
+  {
+    "question": "What type of task does the FEVER dataset aim to facilitate, according to the authors?",
+    "page": 15
+  },
+  {
+    "question": "What values of k are considered for training in the proposed RAG approach?",
+    "page": 4
+  },
+  {
+    "question": "What is the method used to filter out answer candidates for TriviaQA questions if they do not occur in top 1000 documents for the query?",
+    "page": 18
+  }
+]
