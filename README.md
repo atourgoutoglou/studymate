@@ -3,7 +3,7 @@
 AI study assistant that answers questions about your own PDFs **with page citations**.
 It runs **fully locally** with open-source models (Ollama), so your documents never leave your computer.
 
-> 🚧 Work in progress
+> Work in progress
 
 ## How it works
 
