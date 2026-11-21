@@ -8,10 +8,6 @@
     "page": 2
   },
   {
-    "question": "What is the title of the research paper by Liu et al. that was published in the International Conference on Learning Representations in 2018?",
-    "page": 13
-  },
-  {
     "question": "What is a key characteristic of the FEVER task that distinguishes it from many other approaches to fact verification?",
     "page": 5
   },
@@ -34,10 +30,6 @@
   {
     "question": "What percentage of state-of-the-art pipeline models' results did our models achieve in FEVER fact verification?",
     "page": 2
-  },
-  {
-    "question": "What is the title of the 2020 research paper by Guu et al. cited in this list?",
-    "page": 12
   },
   {
     "question": "What is the amount of CPU memory required to store document index vectors for all of Wikipedia?",

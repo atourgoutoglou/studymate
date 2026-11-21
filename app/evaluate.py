@@ -7,6 +7,7 @@ from app.embeddings import SemanticIndex
 from app.ingest import Chunk, chunk_pdf
 from app.llm import chat
 from app.search import keyword_search
+from app.hybrid import hybrid_search
 
 PDF_PATH = Path("data/rag_paper.pdf")
 QUESTIONS_FILE = Path("eval/questions.json")
@@ -69,6 +70,7 @@ def main() -> None:
     print(f"\nResults on {len(items)} questions:\n")
     evaluate("Keyword", lambda question, k: keyword_search(question, chunks, top_k=k), items)
     evaluate("Semantic", lambda question, k: index.search(question, top_k=k), items)
+    evaluate("Hybrid", lambda question, k: hybrid_search(question, chunks, index, top_k=k), items)
 
 
 if __name__ == "__main__":

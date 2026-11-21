@@ -5,6 +5,7 @@ from app.embeddings import SemanticIndex
 from app.ingest import Chunk, chunk_pdf
 from app.llm import ask_llm
 from app.search import keyword_search
+from app.hybrid import hybrid_search
 
 
 def build_context(chunks: list[Chunk]) -> str:
@@ -29,9 +30,9 @@ def main() -> None:
             continue
 
         keyword_pages = [chunk.page for chunk in keyword_search(question, chunks)]
-        relevant = index.search(question, top_k=5)
+        relevant = hybrid_search(question, chunks, index, top_k=5)
         print(f"Keyword search pages:  {keyword_pages}")
-        print(f"Semantic search pages: {[chunk.page for chunk in relevant]}")
+        print(f"Hybrid search pages:   {[chunk.page for chunk in relevant]}")
 
         answer = ask_llm(question, context=build_context(relevant))
         print(f"\n{answer}")
