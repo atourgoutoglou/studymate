@@ -1,1 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-night: #16143a;
+  --color-brand: #6c5cf5;
+  --color-brand-soft: #efedff;
+  --color-canvas: #f7f7fc;
+  --color-ink: #1a1838;
+  --color-muted: #6b6a85;
+  --color-line: #e7e6f2;
+  --color-surface: #ffffff;
+}
+
+/* Dark theme: same names, darker values */
+.dark {
+  --color-night: #0b0a1d;
+  --color-brand: #7b6cff;
+  --color-brand-soft: #2a2563;
+  --color-canvas: #12112a;
+  --color-ink: #ecebfa;
+  --color-muted: #a09fbd;
+  --color-line: #2d2b55;
+  --color-surface: #1b1a3a;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}
